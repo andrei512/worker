@@ -119,7 +119,7 @@ def server_call(env)
 			]
 		elsif request.request_method == "POST"
 			work_or_501({ status: :error }) do 
-				puts "=" * 100
+				
 				puts "=" * 100
 				puts "new task:"
 
@@ -132,10 +132,10 @@ def server_call(env)
 					params = JSON.parse(params_info)
 				end
 
-				puts "params = #{params}"
-
 				id = SecureRandom.base64.to_s
 				params["id"] = id
+
+				puts "params = #{JSON.pretty_generate(params)}"
 
 				run(params)
 			end
@@ -146,4 +146,5 @@ def server_call(env)
 		page_not_found
 	end
 end
+
 
