@@ -12,8 +12,14 @@ task :count do |params|
 end
 
 task :say do |params|
-	message = params["message"]
-	`say -v Vicki #{message}`
+	Thread.new do 
+		message = params["message"]
+		`say -v Vicki #{message}`
+
+		sleep 2
+
+		call_hook params
+	end
 
 	task_ok params
 end
