@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Worker</title>
+</head>
+<body>
+
+	<h1>Worker</h1>	
+
+	<textarea rows="20" cols="80" name="params" form="work">
+{
+	"task" : "count",
+	"callback" : "http://localhost:9292/run.json",
+	"number" : 1
+}
+    </textarea>
+	<form method="post" id="work">
+		<input type="submit" value="work!">
+	</form>	
+
+</body>
+</html>
