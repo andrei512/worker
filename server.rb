@@ -3,6 +3,7 @@ puts "loading server... #yolo"
 require 'json'
 require "net/http"
 require "uri"
+require 'securerandom'
 
 def call_post url, params
 	puts "calling #{url} with #{JSON.pretty_generate(params)}"
