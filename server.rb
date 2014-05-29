@@ -30,8 +30,10 @@ end
 
 def call_hook task
 	params = task["callback_params"]
-	params ||= task
-
+	unless params
+		params ||= task
+	 	params.delete("callback")
+	end 
 
 	puts "10100000" * 100
 	puts "callback_params = #{params}"
