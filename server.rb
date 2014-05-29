@@ -6,12 +6,14 @@ require "uri"
 require 'securerandom'
 
 def call_post url, params
-	puts "calling #{url} with #{JSON.pretty_generate(params)}"
-
-	uri = URI.parse(url)
-	response = Net::HTTP.post_form(uri, params)
-
-	puts response.body
+    uri = URI(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Post.new(uri.path, initheader = {'Content-Type' =>'application/json'})
+    req.body = params.to_json
+    res = http.request(req)
+    puts "response #{res.body}"
+rescue => e
+    puts "failed #{e}"
 end
 
 @@tasks = {}
@@ -29,16 +31,17 @@ def task name, &lambda
 end
 
 def call_hook task
-	params = task["callback_params"]
-	unless params
-		params ||= task
-	 	params.delete("callback")
-	end 
+	callback = task["callback"]
 
-	puts "10100000" * 100
-	puts "callback_params = #{params}"
+	if callback
+		params = task["callback_params"]
+		unless params
+			params = task.clone
+		 	params.delete("callback")
+		end 
 
-	call_post task["callback"], params
+		call_post callback, params
+	end
 end
 
 def load_tasks!
@@ -116,8 +119,20 @@ def server_call(env)
 			]
 		elsif request.request_method == "POST"
 			work_or_501({ status: :error }) do 
+				puts "=" * 100
+				puts "=" * 100
+				puts "new task:"
+
 				params_info = request.params["params"] 
-				params = JSON.parse(params_info) rescue request.params
+
+				params = nil
+				if params_info == nil
+					params = JSON.parse(request.body.read)
+				else
+					params = JSON.parse(params_info)
+				end
+
+				puts "params = #{params}"
 
 				id = SecureRandom.base64.to_s
 				params["id"] = id
