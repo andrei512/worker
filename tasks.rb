@@ -34,7 +34,7 @@ module Worker
 		say params["head_commit"]["message"]
 		`git pull`
 		say "rebooting system!"
-		3..1.each do |i|
+		for i in 3..1 do
 			say "#{i}"
 			sleep 1
 		end
