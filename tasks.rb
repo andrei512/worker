@@ -5,7 +5,6 @@ def say message
 	`say -v Vicki "#{message}"`
 end
 
-
 module Worker
 	task :count do |params|
 		Thread.new do 
@@ -57,3 +56,4 @@ module Worker
 		task_ok params
 	end
 end
+
