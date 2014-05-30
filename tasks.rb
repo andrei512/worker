@@ -32,6 +32,8 @@ filter :github, -> (params) {
 	say "new github push!"
 	sleep 1
 	say params["head_commit"]["message"]
+	`git pull`
+	say "system updated!"
 
 	task_ok params
 end
