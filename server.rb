@@ -87,15 +87,11 @@ def work_or_501 error
 end
 
 def undefined_task_proc 
-	[
-		200,
-	 	{
-	 		"Content-Type" => "text/json"
-	 	},
-	 	[JSON.pretty_generate({
+	-> (params) {
+		JSON.pretty_generate({
 	 		message: "Undefined task!",
- 		})]
-	]
+ 		})
+	}
 end
 
 def filter name, validator, &lambda
