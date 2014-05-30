@@ -1,17 +1,17 @@
 require 'watir'
 require 'watir-webdriver'
 require 'nokogiri'
-require 'os'
+# require 'os'
 require 'json'
 
 query_string = ARGV[0]
 
-if OS.linux?
-	# no more ui
-	require 'headless'
-	headless = Headless.new
-	headless.start
-end
+# if OS.linux?
+# 	# no more ui
+# 	require 'headless'
+# 	headless = Headless.new
+# 	headless.start
+# end
 
 browser = Watir::Browser.new
 browser.goto 'google.ro'
