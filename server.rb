@@ -88,9 +88,9 @@ end
 
 def undefined_task_proc 
 	-> (params) {
-		JSON.pretty_generate({
-	 		message: "Undefined task!",
- 		})
+		{
+	 		message: "Undefined task!"
+ 		}
 	}
 end
 
