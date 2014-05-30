@@ -179,6 +179,17 @@ module Worker
 			page_not_found
 		end
 	end
+
+	def self.reboot_system!
+		say "rebooting system!"
+
+		[3, 2, 1].each do |i|
+			say "#{i}"
+			sleep 0.5
+		end
+
+		exec "rackup config.ru -p 80"
+	end
 end
 
 Worker.load_tasks!

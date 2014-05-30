@@ -21,6 +21,8 @@ module Worker
 		Thread.new do 
 			say params["message"]
 			call_hook params
+
+			reboot_system!
 		end
 
 		task_ok params
@@ -33,12 +35,8 @@ module Worker
 		sleep 1
 		say params["head_commit"]["message"]
 		`git pull`
-		say "rebooting system!"
-		for i in 3..1 do
-			say "#{i}"
-			sleep 1
-		end
-		exec "rackup config.ru -p 80"
+
+		reboot_system!
 
 		task_ok params
 	end
