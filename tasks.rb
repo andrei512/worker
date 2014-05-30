@@ -29,7 +29,7 @@ end
 filter :github, -> (params) {
 	params["head_commit"] 
 } do |params|
-	say "new github push!"
+	say "new push!"
 	sleep 1
 	say params["head_commit"]["message"]
 	`git pull`
