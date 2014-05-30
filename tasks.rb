@@ -14,6 +14,7 @@ end
 def say message
 	# filteres message to prevent XSS
 	message = message.gsub("\"", "")
+	message = message.gsub("`", "")
 	`say -v Vicki "#{message}"`
 end
 
