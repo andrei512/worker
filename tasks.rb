@@ -38,3 +38,19 @@ filter :github, -> (params) {
 
 	task_ok params
 end
+
+
+task :google do |params|
+	q = params["q"]
+	q = q.gsub("\"", "")
+	q = q.gsub("`", "")
+	Thread.new do 
+		results_data = `ruby google.rb "#{q}"`
+
+		params[:results] = JSON.parse(results_data)
+
+		call_hook params
+	end
+
+	task_ok params
+end
