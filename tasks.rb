@@ -1,14 +1,3 @@
-task :count do |params|
-	Thread.new do 
-		number = params["number"]
-		sleep 2
-
-		call_hook params, number + 1
-	end
-
-	task_ok params
-end
-
 def say message
 	# filteres message to prevent XSS
 	message = message.gsub("\"", "")
@@ -16,37 +5,51 @@ def say message
 	`say -v Vicki "#{message}"`
 end
 
-task :say do |params|
-	Thread.new do 
-		say params["message"]
-		call_hook params
+
+module Worker
+	task :count do |params|
+		Thread.new do 
+			number = params["number"]
+			sleep 2
+
+			call_hook params, number + 1
+		end
+
+		task_ok params
 	end
 
-	task_ok params
-end
+	task :say do |params|
+		Thread.new do 
+			say params["message"]
+			call_hook params
+		end
 
-filter :github, -> (params) {
-	params["head_commit"] 
-} do |params|
-	say "new push!"
-	sleep 1
-	say params["head_commit"]["message"]
-	`git pull`
-	say "system updated!"
-
-	task_ok params
-end
-
-
-task :google do |params|
-	q = params["q"]
-	q = q.gsub("\"", "")
-	q = q.gsub("`", "")
-	Thread.new do 
-		results_data = `ruby google.rb "#{q}"`
-
-		call_hook params, JSON.parse(results_data)
+		task_ok params
 	end
 
-	task_ok params
+	filter :github, -> (params) {
+		params["head_commit"] 
+	} do |params|
+		say "new push!"
+		sleep 1
+		say params["head_commit"]["message"]
+		`git pull`
+		say "rebooting system!"
+		exec "rackup config.ru"
+
+		task_ok params
+	end
+
+	task :google do |params|
+		q = params["q"]
+		q = q.gsub("\"", "")
+		q = q.gsub("`", "")
+		Thread.new do 
+			results_data = `ruby google.rb "#{q}"`
+
+			call_hook params, JSON.parse(results_data)
+		end
+
+		task_ok params
+	end
 end
