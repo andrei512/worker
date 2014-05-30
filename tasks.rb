@@ -38,7 +38,7 @@ module Worker
 			say "#{i}"
 			sleep 1
 		end
-		exec "rackup config.ru"
+		exec "rackup config.ru -p 80"
 
 		task_ok params
 	end
