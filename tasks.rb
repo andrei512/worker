@@ -1,11 +1,9 @@
 task :count do |params|
-	number = params["number"]
 	Thread.new do 
-		params["number"] = number + 1
+		number = params["number"]
+		sleep 2
 
-		sleep 10
-
-		call_hook params
+		call_hook params, number + 1
 	end
 
 	task_ok params
@@ -47,9 +45,7 @@ task :google do |params|
 	Thread.new do 
 		results_data = `ruby google.rb "#{q}"`
 
-		params[:results] = JSON.parse(results_data)
-
-		call_hook params
+		call_hook params, JSON.parse(results_data)
 	end
 
 	task_ok params

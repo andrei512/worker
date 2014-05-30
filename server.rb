@@ -31,7 +31,7 @@ def task name, &lambda
 	@@tasks[name.to_s] = lambda
 end
 
-def call_hook task
+def call_hook task, results={}
 	callback = task["callback"]
 
 	if callback
@@ -39,7 +39,10 @@ def call_hook task
 		unless params
 			params = task.clone
 		 	params.delete("callback")
+		 	params.delete("task")
 		end 
+
+		params[:results] = results
 
 		call_post callback, params
 	end
