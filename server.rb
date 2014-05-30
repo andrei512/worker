@@ -17,6 +17,7 @@ rescue => e
 end
 
 @@tasks = {}
+@@filters = []
 
 def task_ok task
 	{
@@ -82,10 +83,46 @@ def work_or_501 error
 	end
 end
 
+def undefined_task_proc 
+	[
+		200,
+	 	{
+	 		"Content-Type" => "text/json"
+	 	},
+	 	[JSON.pretty_generate({
+	 		message: "Undefined task!",
+ 		})]
+	]
+end
+
+def filter name, validator, &lambda
+	@@filters << {
+		validator: validator,
+		lambda: lambda
+	}
+end
+
+def proc_for task
+	proc = @@tasks[task["task"]] 
+
+	unless proc
+		@@filters.each do |filter|
+			if filter[:validator].call(task)
+				proc = filter[:lambda]
+				break
+			end
+		end
+	end
+
+	proc ||= undefined_task_proc
+
+	proc
+end
+
 def run task
 	name = task["task"]
 
-	proc = @@tasks[name]
+	proc = proc_for task
 
 	output = proc.call(task)
 

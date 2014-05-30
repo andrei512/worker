@@ -25,3 +25,13 @@ task :say do |params|
 
 	task_ok params
 end
+
+filter :github, -> (params) {
+	params["head_commit"] 
+} do |params|
+	puts "%" * 100
+	puts "%" * 100
+	puts "%" * 100
+	puts "github push! :)"
+	puts params
+end
