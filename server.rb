@@ -39,7 +39,8 @@ def call_hook task, results={}
 		unless params
 			params = task.clone
 		 	params.delete("callback")
-		 	params.delete("task")
+		 	taskname = params.delete("task")
+		 	params["original-task"] = taskname
 		end 
 
 		params[:results] = results
