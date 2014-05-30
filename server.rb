@@ -191,5 +191,5 @@ module Worker
 		exec "rackup config.ru -p 80"
 	end
 end
-
+ 
 Worker.load_tasks!
