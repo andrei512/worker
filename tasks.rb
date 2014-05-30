@@ -30,7 +30,7 @@ filter :github, -> (params) {
 	params["head_commit"] 
 } do |params|
 	say "new github push!"
-	sleep 0.5
+	sleep 1
 	say params["head_commit"]["message"]
 
 	task_ok params
