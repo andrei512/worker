@@ -35,6 +35,10 @@ module Worker
 		say params["head_commit"]["message"]
 		`git pull`
 		say "rebooting system!"
+		3..1.each do |i|
+			say "#{i}"
+			sleep 1
+		end
 		exec "rackup config.ru"
 
 		task_ok params
