@@ -11,15 +11,15 @@ task :count do |params|
 	task_ok params
 end
 
+def say message
+	# filteres message to prevent XSS
+	message = message.gsub("\"", "")
+	`say -v Vicki "#{message}"`
+end
+
 task :say do |params|
 	Thread.new do 
-		message = params["message"]
-		puts "original message: #{message}"
-		message = message.gsub("\"", "")
-
-		puts "filtered message: #{message}"
-		`say -v Vicki "#{message}"`
-
+		say params["message"]
 		call_hook params
 	end
 
@@ -29,9 +29,9 @@ end
 filter :github, -> (params) {
 	params["head_commit"] 
 } do |params|
-	puts "%" * 100
-	puts "%" * 100
-	puts "%" * 100
-	puts "github push! :)"
-	puts params
+	say "new github push!"
+	sleep 0.5
+	say params["head_commit"]["message"]
+
+	task_ok params
 end
