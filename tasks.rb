@@ -14,7 +14,11 @@ end
 task :say do |params|
 	Thread.new do 
 		message = params["message"]
-		`say -v Vicki #{message}`
+		puts "original message: #{message}"
+		message = message.gsub("\"", "")
+
+		puts "filtered message: #{message}"
+		`say -v Vicki "#{message}"`
 
 		call_hook params
 	end
