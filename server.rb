@@ -141,7 +141,7 @@ def server_call(env)
 	request = Rack::Request.new env
 
 	puts "#{request.request_method} #{request.path}"
-	puts "params = #{request.params}" 
+	# puts "params = #{request.params}" 
 
 	if request.path == "/tasks.json"
 		list_tasks
