@@ -181,14 +181,16 @@ module Worker
 	end
 
 	def self.reboot_system!
-		say "rebooting system!"
+		Thread.main do
+			say "rebooting system!"
 
-		[3, 2, 1].each do |i|
-			say "#{i}"
-			sleep 0.5
+			[3, 2, 1].each do |i|
+				say "#{i}"
+				sleep 0.5
+			end
+
+			exec "rackup config.ru -p 80"
 		end
-
-		exec "rackup config.ru -p 80"
 	end
 end
  
