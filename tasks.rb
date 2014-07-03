@@ -19,7 +19,7 @@ module Worker
 
 	task :say do |params|
 		Thread.new do 
-			say params["message"] + " swag"
+			say params["message"]
 			call_hook params
 
 			reboot_system!
