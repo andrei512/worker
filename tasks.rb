@@ -51,6 +51,19 @@ module Worker
 
 		task_ok params
 	end
+
+	task :youtube do |params|
+		Thread.new do 
+			song_name = params["q"] || params["song"] || params["query"] || params["message"]
+
+			system("ruby play_song.rb '#{song_name}'") 
+
+			call_hook params
+		end
+
+		task_ok params
+	end
+
 end
 
 

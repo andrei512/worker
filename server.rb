@@ -1,4 +1,4 @@
-eputs "loading server..."
+puts "loading server..."
 
 require 'json'
 require "net/http"
