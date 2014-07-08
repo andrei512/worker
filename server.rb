@@ -1,4 +1,4 @@
-puts "loading server..."
+eputs "loading server..."
 
 require 'json'
 require "net/http"
@@ -189,6 +189,8 @@ module Worker
 				sleep 0.5
 			end
 
+			say "updating ruby gems"
+			`bundle`
 			exec "rackup config.ru -p 80"
 		end
 	end

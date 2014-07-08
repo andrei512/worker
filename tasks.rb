@@ -21,8 +21,6 @@ module Worker
 		Thread.new do 
 			say params["message"]
 			call_hook params
-
-			reboot_system!
 		end
 
 		task_ok params

@@ -4,4 +4,4 @@ gem 'nokogiri'
 gem 'os'
 gem 'headless'
 gem 'beaneater'
-
+gem 'youtube_search'
