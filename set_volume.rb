@@ -8,4 +8,4 @@ if new_volume < 0
 	new_volume = 0
 end
 
-`osascrip -e "set Volume #{new_volume}"`
+`osascript -e "set Volume #{new_volume}"`
