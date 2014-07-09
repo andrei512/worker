@@ -5,6 +5,17 @@ def say message
 	`say -v Vicki "#{message}"`
 end
 
+TEMP_FILE = ".play_song_temporary_file"
+
+if File.exists? TEMP_FILE
+	old_pid = open(TEMP_FILE).read.to_i
+	`pkill -9 -P #{old_pid}`
+end
+
+File.open(TEMP_FILE, "w") { |file|
+	file.write(Process.pid)
+}
+
 song = ARGV[0]
 
 require 'rubygems'
