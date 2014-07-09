@@ -64,6 +64,18 @@ module Worker
 		task_ok params
 	end
 
+	task :volume do |params|
+		Thread.new do 
+			volume = params["volume"] || params["v"] || params["message"]
+
+			system("ruby set_volume.rb '#{volume}'") 
+
+			call_hook params
+		end
+
+		task_ok params
+	end
+
 end
 
 
