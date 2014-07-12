@@ -158,11 +158,24 @@ module Worker
 
 					params_info = request.params["params"] 
 
+
 					params = nil
-					if params_info == nil
-						params = JSON.parse(request.body.read)
-					else
-						params = JSON.parse(params_info)
+					begin
+						if params_info == nil
+							params = JSON.parse(request.body.read)
+						else
+							params = JSON.parse(params_info)
+						end
+					rescue Exception => e
+						return [
+							200,
+						 	{
+						 		"Content-Type" => "text/json"
+						 	},
+						 	{ 
+						 		status: :error 
+						 	}
+						 ]
 					end
 
 					id = SecureRandom.base64.to_s
