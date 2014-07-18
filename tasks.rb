@@ -83,6 +83,9 @@ module Worker
 		Thread.new do 
 			song_name = params["q"] || params["song"] || params["query"] || params["message"]
 
+			song_name.gsub!("'", "")
+			song_name.gsub!("`", "")
+
 			# raw log
 			File.open(".youtube_log", "a+") { |log|  
 				log.write("#{Time.now} #{song_name}\n")
