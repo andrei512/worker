@@ -94,7 +94,7 @@ module Worker
 
 			old_volume = get_volume
 
-			set_volume 7
+			set_volume 6
 
 			say message
 
