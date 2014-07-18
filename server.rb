@@ -5,6 +5,18 @@ require "net/http"
 require "uri"
 require 'securerandom'
 
+def say message
+	# filteres message to prevent XSS
+	message = message.gsub("\"", "")
+	message = message.gsub("`", "")
+	`say -v Vicki "#{message}"`
+end
+
+def play_sound sound
+	sound_file = Dir["**/**#{sound}**"].first
+	`afplay "#{sound_file}"`
+end
+
 def call_post url, params
     uri = URI(url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -243,6 +255,14 @@ module Worker
 				say "#{i}"
 				sleep 0.5
 			end
+
+			upgrade_sounds = [
+				"Alert_ProtossUpgradeComplete",
+				"Alert_TerranAddOnComplete",
+				"Alert_ZergMutationComplete"
+			]
+
+			play_sound upgrade_sounds.sample
 
 			exec "rackup config.ru -p 80"
 		end

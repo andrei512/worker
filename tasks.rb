@@ -5,6 +5,11 @@ def say message
 	`say -v Vicki "#{message}"`
 end
 
+def play_sound sound
+	sound_file = Dir["**/**#{sound}**"].first
+	`afplay "#{sound_file}"`
+end
+
 def set_volume volume
 	system("ruby set_volume.rb '#{volume}'") 
 end
@@ -17,10 +22,7 @@ def get_volume
 	volume = (raw_volume / 14).to_i # 2
 end
 
-def play_sound sound
-	sound_file = Dir["**/**#{sound}**"].first
-	`afplay "#{sound_file}"`
-end
+
 
 module Worker
 	task :count do |params|
