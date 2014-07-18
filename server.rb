@@ -256,15 +256,7 @@ module Worker
 				sleep 0.5
 			end
 
-			upgrade_sounds = [
-				"Alert_ProtossUpgradeComplete",
-				"Alert_TerranAddOnComplete",
-				"Alert_ZergMutationComplete"
-			]
-
-			play_sound upgrade_sounds.sample
-
-			exec "rackup config.ru -p 80"
+			exec "sudo rackup config.ru -p 80"
 		# end
 	end
 end
@@ -272,5 +264,3 @@ end
  
 Worker.load_tasks!
 
-puts "yolo"
-Worker.reboot_system!
