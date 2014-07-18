@@ -4,7 +4,7 @@ require 'rack'
 
 SERVER_FILE = 'server.rb'
 
-puts "server starting..."
+puts "server starting ..."
 
 class App
 	def call(env)
