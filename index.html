@@ -2,6 +2,12 @@
 <html>
 <head>
 	<title>Worker</title>
+
+<style>
+	.float {
+		float: left;
+	}
+</style>
 </head>
 <body>
 
@@ -30,35 +36,38 @@
 
 	<h2>Volume</h2>
 
-	<form method="post" id="mute">
-		<input type="hidden" name="params" value='{"task" : "volume","value" : "0"}'>
-		<input type="submit" value="mute">
-	</form>	
+	<div>
+		<form method="post" id="mute" class="float">
+			<input type="hidden" name="params" value='{"task" : "volume","value" : "0"}'>
+			<input type="submit" value="mute">
+		</form>	
 
-	<form method="post" id="volume 1">
-		<input type="hidden" name="params" value='{"task" : "volume","value" : "1"}'>
-		<input type="submit" value="1">
-	</form>	
+		<form method="post" id="volume 1" class="float">
+			<input type="hidden" name="params" value='{"task" : "volume","value" : "1"}'>
+			<input type="submit" value="1">
+		</form>	
 
-	<form method="post" id="volume 2">
-		<input type="hidden" name="params" value='{"task" : "volume","value" : "2"}'>
-		<input type="submit" value="2">
-	</form>	
+		<form method="post" id="volume 2" class="float">
+			<input type="hidden" name="params" value='{"task" : "volume","value" : "2"}'>
+			<input type="submit" value="2" >
+		</form>	
 
-	<form method="post" id="volume 3">
-		<input type="hidden" name="params" value='{"task" : "volume","value" : "3"}'>
-		<input type="submit" value="3">
-	</form>	
+		<form method="post" id="volume 3" class="float">
+			<input type="hidden" name="params" value='{"task" : "volume","value" : "3"}'>
+			<input type="submit" value="3">
+		</form>	
 
-	<form method="post" id="volume 4">
-		<input type="hidden" name="params" value='{"task" : "volume","value" : "4"}'>
-		<input type="submit" value="4">
-	</form>	
+		<form method="post" id="volume 4" class="float">
+			<input type="hidden" name="params" value='{"task" : "volume","value" : "4"}'>
+			<input type="submit" value="4">
+		</form>	
 
-	<form method="post" id="volume 5">
-		<input type="hidden" name="params" value='{"task" : "volume","value" : "5"}'>
-		<input type="submit" value="5">
-	</form>	
+		<form method="post" id="volume 5" class="float">
+			<input type="hidden" name="params" value='{"task" : "volume","value" : "5"}'>
+			<input type="submit" value="5">
+		</form>	
+	
+	</div>
 
 	<br/>
 
