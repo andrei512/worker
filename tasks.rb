@@ -5,6 +5,19 @@ def say message
 	`say -v Vicki "#{message}"`
 end
 
+def set_volume volume
+	system("ruby set_volume.rb '#{volume}'") 
+end
+
+def get_volume 
+	volume_info = `osascript -e 'get volume settings'`
+	# output volume:29, input volume:58, alert volume:100, output muted:false
+
+	raw_volume = volume_info.split(":")[1].to_i  #29
+	volume = (raw_volume / 14).to_i # 2
+end
+
+
 module Worker
 	task :count do |params|
 		Thread.new do 
@@ -68,7 +81,24 @@ module Worker
 		Thread.new do 
 			volume = params["volume"] || params["v"] || params["message"]
 
-			system("ruby set_volume.rb '#{volume}'") 
+
+			call_hook params
+		end
+
+		task_ok params
+	end
+
+	task :yell do |params|
+		Thread.new do 
+			message = params["message"]
+
+			old_volume = get_volume
+
+			set_volume 7
+
+			say message
+
+			set_volume old_volume
 
 			call_hook params
 		end

@@ -19,6 +19,7 @@ end
 module Worker
 	@@tasks = {}
 	@@filters = []
+	@@paths = {}
 
 	def self.task_ok task
 		{
@@ -103,6 +104,15 @@ module Worker
 		}
 	end
 
+	def self.path path, mathod = "GET", &lambda
+		@@paths << {
+			path: path,
+			method: method,
+			lamdba: lambda
+		}
+	end
+
+
 	def self.proc_for task
 		proc = @@tasks[task["task"]] 
 
@@ -136,8 +146,64 @@ module Worker
 		]
 	end
 
+	def self.get_params request
+		params_info = request.params["params"] 
+
+		params = nil
+
+		begin
+			if params_info == nil
+				params = JSON.parse(request.body.read)
+			else
+				params = JSON.parse(params_info)
+			end
+		rescue Exception => e
+			return [
+				200,
+			 	{
+			 		"Content-Type" => "text/json"
+			 	},
+			 	{ 
+			 		status: :error 
+			 	}
+			 ]
+		end
+
+		id = SecureRandom.base64.to_s
+		params["id"] = id
+
+		params
+	end
+
+	def self.path_matches path, request_path
+		false
+	end
+
+	def path_description_matches path_info, request
+		path = path_info[:path]
+		method = path_info[:method]
+
+		matches = true
+
+		if method != request.request_method
+			matches = false
+		else 
+			components = path_matches path, request.path
+		end
+
+		matches
+	end
+
 	def self.server_call(env)
 		request = Rack::Request.new env
+
+		@@paths.each do |path_info| 
+			if path_matches path_info, request
+				params = get_params(request)
+				lambda = path_info[:lambda]
+				return lambda()
+			end
+		end
 
 		if request.path == "/tasks.json"
 			list_tasks
@@ -152,34 +218,10 @@ module Worker
 				]
 			elsif request.request_method == "POST"
 				work_or_501({ status: :error }) do 
-					
 					puts "=" * 100
 					puts "new task:"
 
-					params_info = request.params["params"] 
-
-
-					params = nil
-					begin
-						if params_info == nil
-							params = JSON.parse(request.body.read)
-						else
-							params = JSON.parse(params_info)
-						end
-					rescue Exception => e
-						return [
-							200,
-						 	{
-						 		"Content-Type" => "text/json"
-						 	},
-						 	{ 
-						 		status: :error 
-						 	}
-						 ]
-					end
-
-					id = SecureRandom.base64.to_s
-					params["id"] = id
+					params = get_params(request)
 
 					puts "params = #{JSON.pretty_generate(params)}"
 
