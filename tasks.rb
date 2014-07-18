@@ -17,6 +17,10 @@ def get_volume
 	volume = (raw_volume / 14).to_i # 2
 end
 
+def play_sound sound
+	sound_file = Dir["**/**#{sound}**"].first
+	`afplay "#{sound_file}"`
+end
 
 module Worker
 	task :count do |params|
@@ -113,10 +117,22 @@ module Worker
 
 			set_volume 6
 
-			`afplay "resources/sounds/door bell.wav"`
+			play_sound "door bell.wav"
 
 			set_volume old_volume
 
+			call_hook params
+		end
+
+		task_ok params
+	end
+
+	task :sound do |params|
+		Thread.new do 
+			sound = params["q"] || params["sound"] || params["query"] || params["message"]
+
+			play_sound  sound
+			
 			call_hook params
 		end
 
