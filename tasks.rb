@@ -83,12 +83,12 @@ module Worker
 		Thread.new do 
 			song_name = params["q"] || params["song"] || params["query"] || params["message"]
 
-			system("ruby play_song.rb '#{song_name}'") 
-
 			# raw log
 			File.open(".youtube_log", "a+") { |log|  
 				log.write("#{song_name}\n")
 			}
+
+			system("ruby play_song.rb '#{song_name}'") 
 
 			call_hook params
 		end
