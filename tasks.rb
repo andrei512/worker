@@ -65,7 +65,7 @@ module Worker
 
 		task_ok params
 	end
-
+ 
 	task :google do |params|
 		q = params["q"]
 		q = q.gsub("\"", "")
