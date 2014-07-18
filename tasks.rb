@@ -1,14 +1,14 @@
-def say message
-	# filteres message to prevent XSS
-	message = message.gsub("\"", "")
-	message = message.gsub("`", "")
-	`say -v Vicki "#{message}"`
-end
+# def say message
+# 	# filteres message to prevent XSS
+# 	message = message.gsub("\"", "")
+# 	message = message.gsub("`", "")
+# 	`say -v Vicki "#{message}"`
+# end
 
-def play_sound sound
-	sound_file = Dir["**/**#{sound}**"].first
-	`afplay "#{sound_file}"`
-end
+# def play_sound sound
+# 	sound_file = Dir["**/**#{sound}**"].first
+# 	`afplay "#{sound_file}"`
+# end
 
 def set_volume volume
 	system("ruby set_volume.rb '#{volume}'") 
@@ -52,6 +52,14 @@ module Worker
 		sleep 1
 		say params["head_commit"]["message"]
 		`git pull`
+
+		upgrade_sounds = [
+			"Alert_ProtossUpgradeComplete",
+			"Alert_TerranAddOnComplete",
+			"Alert_ZergMutationComplete"
+		]
+
+		play_sound upgrade_sounds.sample
 
 		reboot_system!
 

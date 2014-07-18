@@ -248,7 +248,7 @@ module Worker
 	end
 
 	def self.reboot_system!
-		Thread.main do
+		# Thread.main do
 			say "rebooting system!"
 
 			[3, 2, 1].each do |i|
@@ -265,9 +265,12 @@ module Worker
 			play_sound upgrade_sounds.sample
 
 			exec "rackup config.ru -p 80"
-		end
+		# end
 	end
 end
 
  
 Worker.load_tasks!
+
+puts "yolo"
+Worker.reboot_system!
