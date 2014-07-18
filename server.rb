@@ -161,11 +161,17 @@ module Worker
 	def self.get_params request
 		params_info = request.params["params"] 
 
+		puts "request.params = #{request.params}"
+
 		params = nil
 
 		begin
 			if params_info == nil
-				params = JSON.parse(request.body.read)
+				unless request.params
+					params = JSON.parse(request.body.read)
+				else 
+					params = request.params	
+				end
 			else
 				params = JSON.parse(params_info)
 			end
