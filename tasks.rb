@@ -79,8 +79,9 @@ module Worker
 
 	task :volume do |params|
 		Thread.new do 
-			volume = params["volume"] || params["v"] || params["message"]
+			volume = params["volume"] || params["v"] || params["message"] || params["value"]
 
+			set_volume volume
 
 			call_hook params
 		end
@@ -97,6 +98,22 @@ module Worker
 			set_volume 6
 
 			say message
+
+			set_volume old_volume
+
+			call_hook params
+		end
+
+		task_ok params
+	end
+
+	task :door do |params|
+		Thread.new do 
+			old_volume = get_volume
+
+			set_volume 6
+
+			`afplay "resources/sounds/door bell.wav"`
 
 			set_volume old_volume
 
