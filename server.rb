@@ -167,7 +167,7 @@ module Worker
 
 		begin
 			if params_info == nil
-				unless request.params
+				unless request.params["task"]
 					params = JSON.parse(request.body.read)
 				else 
 					params = request.params	
