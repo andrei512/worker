@@ -86,7 +86,7 @@ module Worker
 			system("ruby play_song.rb '#{song_name}'") 
 
 			# raw log
-			File.open(".youtube_log", "a") { |log|  
+			File.open(".youtube_log", "a+") { |log|  
 				log.write("#{song_name}\n")
 			}
 
