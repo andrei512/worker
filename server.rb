@@ -189,7 +189,7 @@ module Worker
 
 		id = SecureRandom.base64.to_s
 		params["id"] = id
-
+ 
 		params
 	end
 
