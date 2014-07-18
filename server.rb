@@ -268,5 +268,6 @@ module Worker
 		end
 	end
 end
+
  
 Worker.load_tasks!
