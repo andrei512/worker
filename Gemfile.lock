@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    beaneater (0.3.2)
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     commonwatir (4.0.0)
@@ -25,6 +26,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  beaneater
   os
   watir
   watir-webdriver
