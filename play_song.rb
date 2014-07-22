@@ -23,6 +23,7 @@ require 'youtube_search'
 require 'json'
 require 'watir'
 require 'watir-webdriver'
+require 'yt_mp3'
 
 say "looking for #{song}"
 
