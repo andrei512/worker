@@ -18,6 +18,10 @@ File.open(TEMP_FILE, "w") { |file|
 
 song = ARGV[0]
 
+if song == "random"
+	song = open(".youtube_log").read.line.sample
+end
+
 require 'rubygems'
 require 'youtube_search'
 require 'json'
