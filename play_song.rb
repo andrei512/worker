@@ -18,16 +18,18 @@ File.open(TEMP_FILE, "w") { |file|
 
 song = ARGV[0]
 
+# raw log
+File.open(".youtube_log", "a+") { |log|  
+	log.write("#{Time.now} #{song}\n")
+}
+
+
 history = open(".youtube_log").read.lines
 
 while song == "random"
 	song = history.sample[26..-1]
 end
 
-# raw log
-File.open(".youtube_log", "a+") { |log|  
-	log.write("#{Time.now} #{song_name}\n")
-}
 
 require 'rubygems'
 require 'youtube_search'
