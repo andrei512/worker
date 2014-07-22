@@ -19,7 +19,7 @@ File.open(TEMP_FILE, "w") { |file|
 song = ARGV[0]
 
 if song == "random"
-	song = open(".youtube_log").read.line.sample
+	song = open(".youtube_log").read.lines.sample
 end
 
 require 'rubygems'
