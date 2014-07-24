@@ -26,7 +26,7 @@ File.open(".youtube_log", "a+") { |log|
 
 history = open(".youtube_log").read.lines
 
-while song == "random"
+while song.strip == "random"
 	song = history.sample[26..-1]
 end
 
