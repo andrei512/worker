@@ -225,7 +225,7 @@ module Worker
 
 		if request.path == "/tasks.json"
 			list_tasks
-		elsif request.path == "/run.json"
+		elsif request.path == "/run.json" or request.path == "/"
 			if request.request_method == "GET"
 				[
 					200,
